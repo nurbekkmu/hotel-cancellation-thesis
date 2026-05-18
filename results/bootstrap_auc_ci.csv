@@ -1,0 +1,5 @@
+Configuration,AUC (mean),95% CI Lower,95% CI Upper,CI Width
+Resort XGB No Hol,0.9583,0.9544,0.9623,0.0079
+Resort XGB With Hol,0.9581,0.9543,0.9621,0.0078
+City RF No Hol,0.9526,0.9496,0.9554,0.0058
+City RF With Hol,0.9531,0.9502,0.9559,0.0057

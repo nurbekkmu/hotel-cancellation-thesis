@@ -1,0 +1,7 @@
+Model,Feature,Accuracy,Recall,Precision,F1 Score,Specificity,AUC,PR-AUC
+Logistic Regression,Without Holiday,0.8263,0.8611,0.639,0.7336,0.813,0.9098,0.794
+Random Forest,Without Holiday,0.8841,0.9033,0.7381,0.8124,0.8768,0.9572,0.9044
+XGBoost,Without Holiday,0.8799,0.9087,0.727,0.8078,0.8688,0.9582,0.9022
+Logistic Regression,With Holiday,0.8267,0.8611,0.6396,0.734,0.8135,0.9098,0.7941
+Random Forest,With Holiday,0.8818,0.902,0.7335,0.809,0.874,0.9576,0.9051
+XGBoost,With Holiday,0.8811,0.9096,0.7293,0.8095,0.8702,0.9581,0.902

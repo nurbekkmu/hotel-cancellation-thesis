@@ -1,0 +1,16 @@
+feature,mean_|SHAP|,pct_of_total,rank
+country_PRT,1.3108,16.73,1
+required_car_parking_spaces,1.0393,13.26,2
+lead_time,0.6577,8.39,3
+total_of_special_requests,0.4238,5.41,4
+MS_Online TA,0.3962,5.06,5
+arrival_date_year,0.3576,4.56,6
+adr,0.357,4.56,7
+CT_Transient,0.3422,4.37,8
+ART_A,0.3221,4.11,9
+MS_Offline TA/TO,0.2688,3.43,10
+RRT_A,0.2309,2.95,11
+arrival_date_week_number,0.2223,2.84,12
+previous_cancellations,0.1912,2.44,13
+booking_changes,0.1728,2.2,14
+arrival_date_day_of_month,0.1351,1.72,15

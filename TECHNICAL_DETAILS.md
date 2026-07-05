@@ -39,8 +39,8 @@ A pre-cleaned version of this dataset (`cleaned_dataset.csv`) is used as input. 
 
 ### 2.2 Dataset Dimensions
 
-- **Total bookings:** Loaded via `pd.read_csv('cleaned_dataset.csv')` with shape reported at runtime.
-- **Features:** The dataset contains multiple features including booking-level, temporal, guest, and hotel characteristics. The exact feature count is reported at runtime from `df.shape[1]`.
+- **Total bookings:** 118,980 (40,044 resort / 78,936 city) after cleaning.
+- **Features:** The cleaned file has 70 columns, including the target (`is_canceled`) and the `hotel` indicator. After dropping one reference column per one-hot group (§3.2), the modelling feature set contains 62 features — 64 when the two engineered holiday features (§4) are included, which is the count SHAP rankings refer to.
 - **Missing values:** Zero (`df.isnull().sum().sum()` confirms no missing values in the cleaned dataset).
 
 ### 2.3 Target Variable
@@ -693,8 +693,8 @@ RANDOM_STATE = 42
 
 Changes made to the analysis in response to review feedback:
 
-| ID | Priority | Description |
-|---|---|---|
+| Review / Priority | Change |
+|---|---|
 | CR2 P1 | Added Cramér's V effect size to chi-squared test |
 | CR2 P1 | Added PR-AUC (Precision-Recall AUC) metric for imbalanced evaluation |
 | CR2 P1 | Reported CV AUC ± standard deviation from GridSearchCV for all models |

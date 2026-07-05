@@ -26,8 +26,8 @@ performance degrades when you test on future data instead of a random split.
 ## Results
 
 Three models (Logistic Regression, Random Forest, XGBoost), two Portuguese
-hotels (one resort, one city), ~140,000 bookings from July 2015 to August
-2017. Models tuned with 5-fold GridSearchCV, trained on undersampled balanced
+hotels (one resort, one city), 118,980 bookings (40,044 resort / 78,936 city)
+from July 2015 to August 2017. Models tuned with 5-fold GridSearchCV, trained on undersampled balanced
 data, evaluated on the original imbalanced test set.
 
 ![ROC curves for all models](figures/roc_curves_all_models.png)

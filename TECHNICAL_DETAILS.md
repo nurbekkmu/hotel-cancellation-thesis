@@ -114,10 +114,9 @@ The dataset is split into two independent subsets before any modeling:
 - **Resort Hotel subset:** All rows where `hotel == 1`.
 - **City Hotel subset:** All rows where `hotel == 0`.
 
+### 3.4 Train/Test Split and Class Balancing
 
-
-
-**Correct pipeline flow:**
+**Pipeline flow:**
 ```
 Full data → Split by hotel → 80/20 Train/Test split (stratified) → Undersample ONLY training set → Train → Evaluate on ORIGINAL imbalanced test set
 ```
@@ -152,6 +151,7 @@ This is the primary novel contribution of the study. The feature is a binary ind
 
 1. **Reconstruct arrival date:** A temporary `arrival_date` column is derived from `arrival_date_year`, `arrival_date_month`, and `arrival_date_day_of_month`.
 2. **Define holiday centers:** 27 Portuguese national public holiday dates across 2015–2017 are manually specified.
+3. **Expand into windows:** Each holiday date is expanded into a ±3-day window (the window size itself is tested in the sensitivity analysis, §4.2).
 4. **Create binary feature:** `is_public_holiday = 1` if the booking's arrival date falls within any holiday window; 0 otherwise.
 5. **Drop temporary column:** The reconstructed `arrival_date` column is dropped after feature creation.
 
@@ -232,14 +232,14 @@ A 2×3 panel EDA figure (`figures/eda_overview.png`) includes:
 
 ### 5.2 Class Balance Visualization
 
-A 2×3 panel figure (`figures_v2/class_balance.png`) displays class distributions across:
+A 2×3 panel figure (`figures/class_balance.png`) displays class distributions across:
 - Full original dataset (per hotel type)
 - Balanced training set (after undersampling)
 - Imbalanced test set (original distribution, realistic evaluation)
 
 ### 5.3 Holiday Analysis
 
-A 2×2 panel figure (`figures_v2/holiday_analysis.png`) examines:
+A 2×2 panel figure (`figures/holiday_analysis.png`) examines:
 - Booking volume during regular days vs. holiday windows (per hotel type)
 - Cancellation rates during regular days vs. holiday windows (per hotel type)
 
@@ -439,9 +439,9 @@ Total combinations: 2 × 3 × 3 × 2 = 36
 
 ### 7.6 Visualizations
 
-- **Confusion matrices** for best models per hotel type (XGBoost for Resort, RF for City) — saved as `figures_v2/confusion_matrix_best_models.png`.
-- **ROC curves** for all three models per hotel type with holiday features — saved as `figures_v2/roc_curves_all_models.png`.
-- **AUC comparison bar chart** for all 12 configurations — saved as `figures_v2/auc_comparison.png`.
+- **Confusion matrices** for best models per hotel type (XGBoost for Resort, RF for City) — saved as `figures/confusion_matrix_best_models.png`.
+- **ROC curves** for all three models per hotel type with holiday features — saved as `figures/roc_curves_all_models.png`.
+- **AUC comparison bar chart** for all 12 configurations — saved as `figures/auc_comparison.png`.
 
 ---
 
@@ -599,6 +599,17 @@ Since Resort uses XGBoost and City uses Random Forest, absolute SHAP magnitudes 
 - Guest origin (`country_PRT`), booking lead time, special requests, and room/parking preferences are far more powerful predictors of cancellation behaviour.
 - Different cancellation dynamics exist between resort and city hotels, justifying separate model pipelines.
 
+### 9.4 Practical Implications for Hotel Managers
+
+| Driver | Action |
+|---|---|
+| **Lead time** (rank 3, both hotels) | Target high-risk bookings made far in advance with early confirmation prompts or flexible rebooking incentives |
+| **Special requests** (rank 1 city, rank 4 resort) | Encourage guests to add special requests at booking; guests with more requests are less likely to cancel |
+| **Domestic guests** (rank 1 resort, rank 2 city) | Develop tailored retention strategies for Portuguese guests, who show distinct cancellation patterns |
+| **Car parking** (rank 2 resort) | For resort hotels, parking reservation confirmations may reinforce guest commitment |
+| **Online TA bookings** (rank 5 resort, rank 7 city) | Online travel agency bookings carry specific cancellation risk; consider differentiated deposit policies |
+| **Previous cancellations** (rank 9–13) | Flag repeat cancellers for proactive outreach or adjusted overbooking strategies |
+
 ---
 
 ## 10. Reproducibility Notes
@@ -678,21 +689,9 @@ RANDOM_STATE = 42
 - `City_RandomForest_SHAP_bar.png` — Bar plot (city)
 - `City_RandomForest_SHAP_dep_*.png` — Dependence plots (city)
 
+### 10.5 Revisions from Critical Review
 
-
-| ID | Description |
-|---|---|
-
-
-| ID | Severity | Description |
-|---|---|---|
-
-#### Critical Review 1 — Methodological Improvements
-
-| ID | Description |
-|---|---|
-
-#### Critical Review 2 — Methodological Improvements
+Changes made to the analysis in response to review feedback:
 
 | ID | Priority | Description |
 |---|---|---|
@@ -715,7 +714,3 @@ RANDOM_STATE = 42
 3. **`arrival_date_year` as a feature:** Encodes temporal trends (e.g., year-over-year growth), not causal booking-level effects. It ranks #6 for resort (4.56%) and #10 for city (3.19%). It should be excluded from discussions of "actionable" cancellation drivers.
 
 4. **Random undersampling:** Discards substantial majority-class training data. Alternative approaches (class_weight balancing, SMOTE, XGBoost's `scale_pos_weight`) should be explored in future work.
-
----
-
-*End of Technical Details — Generated from `analysis.ipynb`*
